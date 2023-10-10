@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.io as pio
+import plotly.colors
 import plotly.graph_objects as go
 pio.templates.default = "plotly_white"
 
@@ -183,3 +184,74 @@ fig_heatmap.update_layout(
     title='Correlation Matrix of RFM Values within Champions Segment')
 
 fig_heatmap.show()
+
+
+pastel_colors = plotly.colors.qualitative.Pastel
+
+segment_counts = data['RFM Customer Segments'].value_counts()
+
+# Create a bar chart to compare segment counts
+fig = go.Figure(data=[go.Bar(x=segment_counts.index,
+                y=segment_counts.values, marker=dict(color=pastel_colors))])
+
+
+# Set the color of the champions segment as a different color
+champions_color = 'rgb(158, 202, 225)'
+
+fig.update_traces(marker_color=[champions_color if segment == 'Champions' else pastel_colors[i]
+                                for i, segment in enumerate(segment_counts.index)],
+                  marker_line_color='rgb(8, 48, 107)',
+                  marker_line_width=1.5, opacity=0.6)
+
+
+# Update the layout
+fig.update_layout(title='Camparison of RFM Segments',
+                  xaxis_title='RFM Segments',
+                  yaxis_title='Number of Customers',
+                  showlegend=False)
+
+fig.show()
+
+# Calculate the average Recency, Frequency and Monetary scores for each segment
+segment_scores = data.groupby(
+    'RFM Customer Segments')['RecencyScore', 'FrequencyScore', 'MonetaryScore'].mean().reset_index()
+
+# Create a grouped bar chart to campare segemnt scores
+fig = go.Figure()
+
+# Adding bars for Recency Scores
+fig.add_trace(go.Bar(
+    x=segment_scores['RFM Customer Segments'],
+    y=segment_scores['RecencyScore'],
+    name='Recency Score',
+    marker_color='rgb(158,202,225)'
+))
+
+# Frequency bar scores
+fig.add_trace(go.Bar(
+    x=segment_scores['RFM Customer Segments'],
+    y=segment_scores['FrequencyScore'],
+    name='Recency Score',
+    marker_color='rgb(94,158,217)'
+))
+
+# Monetary Score bars
+fig.add_trace(go.Bar(
+    x=segment_scores['RFM Customer Segments'],
+    y=segment_scores['MonetaryScore'],
+    name='Monetary Score',
+    marker_color='rgb(32,102,148)'
+))
+
+
+# Update the layout
+fig.update_layout(
+    title='Comparison of RFM Segments based on Recency, Frequency and Monetary Scores',
+    xaxis_title='RFM Segments',
+    yaxis_title='Score',
+    barmode='group',
+    showlegend=True
+)
+
+
+fig.show()
