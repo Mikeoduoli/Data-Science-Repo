@@ -12,35 +12,35 @@ pio.templates.default = "plotly_white"
 
 # Loading our dataset to conduct EDA
 data = pd.read_csv("D:/Data Science BootCamp/Week 2/rfm_data.csv")
-# print(data.describe())
+print(data.describe())
 
-# print(data.shape())
+print(data.shape())
 
 # Display number of columns
-# print(data.columns)
+print(data.columns)
 
 # Display first 5 rows
-# print(data.head())
+print(data.head())
 
 # Display total columns and rows of the data set
-# print(data.shape)  # The dataset contain 1000 rows and 6 columns
+print(data.shape)  # The dataset contain 1000 rows and 6 columns
 
 # Print unique about the dataset
-# print(data.nunique())
+print(data.nunique())
 
 # To check only unique in single column
-# print("\nWe are inspecting the column 'Location':\n\n",
-#       data['Location'].unique())
+print("\nWe are inspecting the column 'Location':\n\n",
+      data['Location'].unique())
 
-# print("\nWe are inspecting the column 'Transaction Amount':\n\n",
-#       data['TransactionAmount'].unique())
+print("\nWe are inspecting the column 'Transaction Amount':\n\n",
+      data['TransactionAmount'].unique())
 
-# print("\nWe are inspecting the column 'Purchase Date':\n\n",
-#       data['PurchaseDate'].unique())
+print("\nWe are inspecting the column 'Purchase Date':\n\n",
+      data['PurchaseDate'].unique())
 
 # Cleaning the dataset, check possibilities of null instances in the dataset
-# print("\nConfirm number of null (empty cells) values int the dataset:\n\n",
-#       data.nunique().isna().sum().sum())
+print("\nConfirm number of null (empty cells) values int the dataset:\n\n",
+      data.nunique().isna().sum().sum())
 
 
 # RFM Analysis
