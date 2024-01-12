@@ -8,7 +8,7 @@ dataset = pd.read_csv(
     "D:/Capstone_Bike_Share_Analysis/datasets/datasets/all_cleaned.csv")
 
 # Finding total number of datasets
-# print("Total Column and Total Rows: \n")
+# print("Total Rows Columns: \n")
 # print(dataset.shape)  # 5719877rows #13 columns
 
 # Finding out top 5 column names
@@ -33,7 +33,7 @@ non_numeric_cols = ['start_station_name', 'end_station_name']
 
 numeric_cols = ['start_station_id', 'end_station_id', 'end_lat', 'end_lng']
 
-# Create a Loop to iterate through the array
+# Create a for Loop to iterate through the array
 # for col in non_numeric_cols:
 #     filled_cols = dataset[col].fillna('N/A')
 # print("Filled Empty cells: \n")
@@ -43,7 +43,6 @@ numeric_cols = ['start_station_id', 'end_station_id', 'end_lat', 'end_lng']
 existing_column_to_be_filled = [
     cols for cols in non_numeric_cols if cols in dataset.columns]
 
-
 numeric_column_to_be_filled = [
     col for col in numeric_cols if col in dataset.columns]
 
@@ -51,7 +50,7 @@ numeric_column_to_be_filled = [
 # filled_empty_cells = dataset.fillna(
 #     value='N/A', Columns=existing_column_to_be_filled)
 
-# Instead of running the above longer for loop, use a list comprehession
+# Instead of running the above longer For Loop, use list comprehession technique
 filled_dataset = pd.DataFrame({
     cols: dataset[cols].fillna(
         'N/A', inplace=True) if cols in existing_column_to_be_filled else dataset[cols]
@@ -61,10 +60,9 @@ filled_dataset = pd.DataFrame({
 print("\nFilled Empty cells: \n")
 print(filled_dataset.isnull().sum())
 
-
 # ---------------------------------------------------------------------------
 # For Numeric columns
-# Instead of running the above longer for loop, use a list comprehession
+# Instead of running the above longer For Loop, use list comprehession technique
 filled_dataset_numeric = pd.DataFrame({
     col: dataset[col].fillna(
         0, inplace=True) if col in numeric_column_to_be_filled else dataset[col]
@@ -74,11 +72,10 @@ filled_dataset_numeric = pd.DataFrame({
 print("\nFilled Numeric Empty cells: \n")
 print(filled_dataset_numeric.isnull().sum())
 
-
 # ---------------------------------------------------------------------------
 
-
 # Create a function to execute the filling across the empty cells
+
 
 def fill_all_cols(dataset):
 
@@ -94,12 +91,12 @@ def fill_all_cols(dataset):
 
 dataset = fill_all_cols(dataset)
 
-print("\nFilled Cells Check: \n")
+print("\nConfirming Filled Cells: \n")
 print(dataset.isnull().sum())
 
-
+# Now your clean dataset is ready for export
 # dataset.to_csv(
-#     r'D:\Capstone_Bike_Share_Analysis\datasets\all_cleaned.csv', index=False)
+#     'D:/Capstone_Bike_Share_Analysis/datasets/clean_bike_data.csv', index=False)
 # print()
 
 
