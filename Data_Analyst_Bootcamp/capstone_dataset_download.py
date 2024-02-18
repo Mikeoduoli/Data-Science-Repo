@@ -3,6 +3,10 @@ from numpy import nan as NA
 from datetime import datetime
 import os
 
+# Visualization Section
+import matplotlib.pyplot as plt
+import matplotlib
+
 # Path to file location
 dataset = pd.read_csv(
     "D:/Capstone_Bike_Share_Analysis/datasets/datasets/all_cleaned.csv")
@@ -20,7 +24,7 @@ print(dataset.head(5))
 # print(dataset.columns)
 
 # Finding respective data types
-# print(dataset.dtypes)
+print(dataset.dtypes)
 
 # Finding null values.
 # print("Total missing values in each column: \n")
@@ -94,7 +98,46 @@ dataset = fill_all_cols(dataset)
 print("\nConfirming Filled Cells: \n")
 print(dataset.isnull().sum())
 
-# Now your clean dataset is ready for export
+
+# Convert the columns started_at and ended_at to datetime
+dataset['started_at'] = pd.to_datetime(dataset['started_at'])
+dataset['ended_at'] = pd.to_datetime(dataset['ended_at'])
+print("\nConfirming Datetime Data Type in Cols: \n")
+print(dataset.dtypes)
+
+print("\nData Type: \n")
+print(type(dataset.started_at[1]))
+
+# Add a New Column "ride_length"
+dataset["ride_length"] = dataset["ended_at"] - dataset["started_at"]
+dataset["ride_length(minutes)"] = dataset["ride_length"].dt.seconds/60
+# dataset["ride_length"].dt.time
+print("\nData Types: \n")
+print(dataset.dtypes)
+print("\nNew Column ride_length Addition Check: \n")
+print(dataset.columns)
+
+
+# Create a column called “day_of_week,” and calculate the day of the week that each ride started
+dataset['day_of_week'] = dataset["started_at"].dt.dayofweek
+print("\nDay of Week Column Addition Check: \n")
+print(dataset['day_of_week'])
+print(dataset)
+
+print("\nFinal Check for Column Data Type: \n")
+print(dataset.dtypes)
+
+# Extract Time from the timestamp
+print("\nFinal Check for Column Data Type: \n")
+print(dataset)
+
+# Visualization
+print("\nDisplay the Matplotlib Version: \n")
+print(matplotlib.__version__)
+
+# plt.plot(dataset)
+
+# Now your clean dataset is ready for export(Already Exported no need to re-export)
 # dataset.to_csv(
 #     'D:/Capstone_Bike_Share_Analysis/datasets/clean_bike_data.csv', index=False)
 # print()
